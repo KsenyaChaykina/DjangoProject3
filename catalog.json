@@ -1,0 +1,65 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Овощи",
+      "description": "Свежие овощи"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Фрукты",
+      "description": "Свежие фрукты"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Бытовая химия",
+      "description": "Моющие средства"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Яблоко",
+      "description": "Желтые яблоки",
+      "photo": "",
+      "category": 2,
+      "price": "0.00",
+      "created_at": "2026-09-23T09:55:50.650Z",
+      "updated_at": "2026-09-23T09:55:50.650Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Помидор",
+      "description": "Помидоры черри",
+      "photo": "",
+      "category": 1,
+      "price": "10.00",
+      "created_at": "2026-09-23T09:56:13.941Z",
+      "updated_at": "2026-09-23T10:52:32.206Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Огурец",
+      "description": "Огурцы коротко плодные",
+      "photo": "",
+      "category": 1,
+      "price": "0.00",
+      "created_at": "2026-09-23T09:56:47.031Z",
+      "updated_at": "2026-09-23T09:56:47.031Z"
+    }
+  }
+]
