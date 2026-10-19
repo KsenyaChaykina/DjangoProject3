@@ -1,0 +1,9 @@
+<h2>Вы уверены, что хотите удалить "{{ object.title }}"?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>Это действие нельзя будет отменить.</p>
+    <button type="submit">Да, удалить</button>
+</form>
+
+<a href="{% url 'blog:detail' object.pk %}">Отмена</a>
