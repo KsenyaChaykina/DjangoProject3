@@ -5,19 +5,18 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <svg aria-label="Placeholder: Thumbnail" class="bd-placeholder-img card-img-top" height="225"
-                         preserveAspectRatio="xMidYMid slice" role="img" width="100%"
-                         xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Описание: {{ object.description|truncatechars:100 }}</text>
-                    </svg>
-                    <div class="card-body"><p class="card-text">{{ object.name }}</p>
+                    <div class="card-body">
+                        <p class="card-text">Название: {{ object.name }}</p>
+                        <p class="card-text">Описание: {{ object.description|truncatechars:100 }}</p>
+                        <p class="card-text">Категория: {{ object.category }}</p>
+                        <p class="card-text">Цена: {{ object.price }}</p>
+                        <p class="card-text">Дата создания: {{ object.created_at }}</p>
+                        <p class="card-text">Дата последнего изменения: {{ object.updated_at }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">В корзину</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Количество</button>
+                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_list' %}" role="button">Назад</a>
                             </div>
-                            <small class="text-body-secondary">9 mins</small></div>
+                        </div>
                     </div>
                 </div>
             </div>
