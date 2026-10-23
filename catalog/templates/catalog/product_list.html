@@ -10,17 +10,23 @@
                          preserveAspectRatio="xMidYMid slice" role="img" width="100%"
                          xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
                         <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Описание: {{ product.description|truncatechars:100 }}</text>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Описание: {{ product.description|truncatechars:100 }}
+                        </text>
                     </svg>
                     <div class="card-body">
                         <p class="card-text">{{ product.name }}</p>
                         <p class="card-text">{{ product.price }}</p>
                         <div class="d-flex justify-content-between align-items-center">
+                            {% if user.is_authenticated %}
                             <div class="btn-group">
-                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_detail' product.pk %}" role="button">Посмотреть товар </a>
-                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_update' product.pk %}" role="button">Редактировать товар </a>
-                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_delete' product.pk %}" role="button">Удалить товар</a>
+                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_detail' product.pk %}"
+                                   role="button">Посмотреть товар </a>
+                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_update' product.pk %}"
+                                   role="button">Редактировать товар </a>
+                                <a class="btn-solid theme-primary" href="{% url 'catalog:products_delete' product.pk %}"
+                                   role="button">Удалить товар</a>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
