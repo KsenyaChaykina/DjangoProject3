@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 class StyleFormMixin:
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for fild_name, fild in self.fields.items():
             if isinstance(fild, BooleanField):
@@ -17,6 +17,7 @@ class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        exclude = ('is_published',)
 
     forbidden_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
@@ -26,7 +27,6 @@ class ProductForm(StyleFormMixin, ModelForm):
         description = cleaned_data.get('description', '')
         name_lower = name.lower()
         description_lower = description.lower()
-
 
         for word in self.forbidden_words:
             if word in name_lower:
@@ -43,3 +43,14 @@ class ProductForm(StyleFormMixin, ModelForm):
         if price < 0:
             raise ValidationError('Цена товара не может быть отрицательной, проверьте цену')
         return price
+
+class AdminForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('is_published',)
