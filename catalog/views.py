@@ -68,7 +68,6 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         raise PermissionDenied
 
 
-
 class HomeTemplateView(TemplateView):
     template_name = "catalog/home.html"
 
