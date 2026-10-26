@@ -20,7 +20,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "catalog",
-    "blog"
+    "blog",
+    "users"
 ]
 
 MIDDLEWARE = [
@@ -109,8 +110,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.console.EmailBackend",
-    },
-}
+# MAILERS = {
+#     "default": {
+#         "BACKEND": "django.core.mail.backends.console.EmailBackend",
+#     },
+# }
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'chaikinaksusha@yandex.ru'
+EMAIL_HOST_PASSWORD = 'vfwiboyiohvlhdik'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_REDIRECT_URL = 'catalog:products_list'
+
+LOGIN_URL = 'users:login'
