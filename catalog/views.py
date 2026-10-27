@@ -1,8 +1,10 @@
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm, AdminForm
 from catalog.models import Product
 
 
@@ -19,6 +21,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products_list')
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -33,10 +42,30 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         context['title'] = 'Редактировать продукт'
         return context
 
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser or user.is_staff:
+            return AdminForm
+        elif user.has_perm('catalog.can_unpublish_product'):
+            return ProductModeratorForm
+        else:
+            return ProductForm
+        raise PermissionDenied
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
-    success_url = reverse_lazy('dogs:products_list')
+    success_url = reverse_lazy('catalog:products_list')
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser or user.is_staff:
+            return AdminForm
+        elif user.has_perm('catalog.can_unpublish_product') or user == self.object.owner:
+            return ProductModeratorForm
+        else:
+            return ProductForm
+        raise PermissionDenied
 
 
 class HomeTemplateView(TemplateView):
