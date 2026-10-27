@@ -6,11 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 from catalog.forms import ProductForm, ProductModeratorForm, AdminForm
 from catalog.models import Product
+from catalog.services import get_products_from_cache, get_products_by_category
 
 
 class ProductListView(ListView):
     model = Product
 
+    def get_queryset(self):
+        return get_products_from_cache()
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
@@ -66,6 +69,20 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         else:
             return ProductForm
         raise PermissionDenied
+
+class CategoryProductsListView(ListView):
+
+    template_name = 'catalog/category_products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        self.category, products = get_products_by_category(self.kwargs['category_id'])
+        return products
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
 
 
 class HomeTemplateView(TemplateView):
